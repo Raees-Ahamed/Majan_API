@@ -8,7 +8,7 @@ try {
     const Logger = require('./Logger/Logger').Logger;
     const bodyParser = require("body-parser");
     const prefix = '/webapi.api';
-    const port = 3000 | process.env.port;
+    const port = 3001 | process.env.port;
     const mongoose = require('mongoose');
 
 
@@ -37,9 +37,11 @@ try {
             .then(() => Logger.info("DB Connected"))
             .catch(err => Logger.error("DB Connecting error " + err));
 
-
+ 
 
         app.use(prefix, require('./Routes/Home'));
+        app.use(prefix, require('./Routes/User'));
+
 
 
 
