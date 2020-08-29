@@ -1,1 +1,13 @@
 Fri Aug 28 2020 10:23:44 GMT+0530 (India Standard Time) : API hosted successfully for port 3000
+Sat Aug 29 2020 14:52:09 GMT+0530 (India Standard Time) : API hosted successfully for port 3000
+Sat Aug 29 2020 14:52:09 GMT+0530 (India Standard Time) : DB Connected
+Sat Aug 29 2020 14:52:26 GMT+0530 (India Standard Time) : API hosted successfully for port 3000
+Sat Aug 29 2020 14:52:26 GMT+0530 (India Standard Time) : DB Connected
+Sat Aug 29 2020 14:53:15 GMT+0530 (India Standard Time) : API hosted successfully for port 3000
+Sat Aug 29 2020 14:53:15 GMT+0530 (India Standard Time) : DB Connected
+Sat Aug 29 2020 14:53:27 GMT+0530 (India Standard Time) : API hosted successfully for port 3000
+Sat Aug 29 2020 14:53:27 GMT+0530 (India Standard Time) : DB Connected
+Sat Aug 29 2020 14:54:23 GMT+0530 (India Standard Time) : API hosted successfully for port 3000
+Sat Aug 29 2020 14:54:23 GMT+0530 (India Standard Time) : DB Connected
+Sat Aug 29 2020 14:54:52 GMT+0530 (India Standard Time) : API hosted successfully for port 3000
+Sat Aug 29 2020 14:54:52 GMT+0530 (India Standard Time) : DB Connected
