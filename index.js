@@ -10,6 +10,8 @@ try {
     const prefix = '/webapi.api';
     const port = 3001 | process.env.port;
     const mongoose = require('mongoose');
+    const db = require('./config/keys').mongoURI;
+
 
 
 
@@ -33,7 +35,7 @@ try {
         console.log("API api hosted successfully for port " + port);
 
         mongoose
-            .connect('mongodb://localhost:27017/Webapi_ShpoingCart_DB', { useNewUrlParser: true , useUnifiedTopology:true})
+            .connect(db, { useNewUrlParser: true , useUnifiedTopology:true})
             .then(() => Logger.info("DB Connected"))
             .catch(err => Logger.error("DB Connecting error " + err));
 
@@ -44,6 +46,7 @@ try {
 
 
 
+        
 
     });
 
