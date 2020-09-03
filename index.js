@@ -43,6 +43,8 @@ try {
 
         app.use(prefix, require('./Routes/Home'));
         app.use(prefix, require('./Routes/User'));
+        app.use(prefix, require('./Routes/Category'));
+
 
 
 
