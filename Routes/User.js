@@ -1,15 +1,24 @@
 var express = require('express');
 var router = express.Router();
 let password = require('../AppHelp/Password').password;
-
+let userValidations = require('../validation/User').userValidations;
 const User = require('../Models/User');
 const mongoObjectId = require('mongoose').Types.ObjectId;
-let respond;
 
 
 router.get('/User/:email/:pwd', (req, res, next) => {
 
     try {
+
+        const { error, isValid } = userValidations.validateSignIn(req.params.email, req.params.pwd);
+
+        if (isValid === false) {
+
+            return res.status(400).send({
+                isValid: isValid,
+                description: error
+            })
+        }
 
         User.findOne({
             email: req.params.email,
@@ -18,28 +27,23 @@ router.get('/User/:email/:pwd', (req, res, next) => {
         }).then(user => {
 
             if (user) {
-                respond = {
-                    respondId: 1,
-                    description: "User present",
-                    messageClass: "alert alert-success"
-                }
+                return res.status(400).send({
+                    isValid: true,
+                    description: "User present"
+                });
             } else {
-                respond = {
-                    respondId: 0,
-                    description: "User does not exist",
-                    messageClass: "alert alert-danger"
-                }
+                return res.status(400).send({
+                    isValid: false,
+                    description: "User does not exist"
+                });
             }
-            res.send(respond);
         });
 
     } catch (ex) {
-        respond = {
-            respondId: 0,
-            description: "User checking error " + ex,
-            messageClass: "alert alert-danger"
-        }
-        res.send(respond);
+        return res.status(501).send({
+            isValid: false,
+            description: "server side error occurred! Please try again shortly.."
+        });
     }
 
 
@@ -48,11 +52,19 @@ router.get('/User/:email/:pwd', (req, res, next) => {
 });
 
 
-
-
 router.post('/User', async (request, result) => {
 
     try {
+
+        const { error, isValid } = userValidations.validateSignUp(request.body);
+        if (isValid === false) {
+           return result.status(400).send({
+                isValid: isValid,
+                description: error
+            })
+        }
+
+
 
         User.findOne({
             email: request.body.email
@@ -60,12 +72,10 @@ router.post('/User', async (request, result) => {
 
             if (user) {
 
-                respond = {
-                    respondId: 0,
-                    description: "User already present",
-                    messageClass: "alert alert-danger"
-                }
-                result.send(respond);
+                return result.status(400).send({
+                    isValid: false,
+                    description: "User already present"
+                });
 
             } else {
 
@@ -82,19 +92,18 @@ router.post('/User', async (request, result) => {
 
                 user.save((err, data) => {
                     if (err) {
-                        respond = {
-                            respondId: 0,
+
+                        return result.status(400).send({
+                            isValid: false,
                             description: "User registring error.Please try agin",
-                            messageClass: "alert alert-danger"
-                        }
+                        });
+
                     } else {
-                        respond = {
-                            respondId: 1,
+                        return result.status(400).send({
+                            isValid: true,
                             description: "User registered Successfuly",
-                            messageClass: "alert alert-sucess"
-                        }
+                        });
                     }
-                    result.send(respond);
                 })
             }
 
@@ -103,20 +112,14 @@ router.post('/User', async (request, result) => {
 
 
     } catch (ex) {
-        respond = {
-            respondId: 0,
-            description: "User registring error.Please try agin",
-            messageClass: "alert alert-danger"
-        }
-        result.send(respond);
+        return result.status(501).send({
+            isValid: false,
+            description: "server side error occurred! Please try again shortly.."+ex,
+        });
     }
 
 
 })
-
-
-
-
 
 
 
