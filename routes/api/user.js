@@ -45,6 +45,7 @@ router.post('/signup', (req, res) => {
                 avatar,
                 password: req.body.password,
                 roletype: req.body.roletype,
+                createdOn: Date.now(),
                 contactno: req.body.contactno
             });
 
@@ -59,6 +60,10 @@ router.post('/signup', (req, res) => {
         }
     });
 });
+
+// @route POST api/users/signin
+// @desc Signin user
+// @access public
 
 router.post('/signin', (req, res) => {
 
@@ -96,12 +101,17 @@ router.post('/signin', (req, res) => {
     });
 });
 
+// @route GET api/users/current
+// @desc get user meta data
+// @access public
+
 router.get('/current', passport.authenticate('jwt', { session: false }), (req, res) => {
     res.json({
         id: req.user.id,
         fname: req.user.fname,
         lname: req.user.lname,
-        email: req.user.email
+        email: req.user.email,
+        roletype: req.user.roletype
     });
 });
 

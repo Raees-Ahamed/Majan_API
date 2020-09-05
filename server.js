@@ -5,6 +5,7 @@ const passport = require('passport');
 const path = require('path');
 
 const users = require('./routes/api/user');
+const product = require('./routes/api/product');
 
 const app = express();
 
@@ -14,7 +15,8 @@ app.use(bodyParser.json());
 const db = require('./config/keys').mongoURI;
 
 mongoose.connect(db, {
-    useNewUrlParser: true
+    useNewUrlParser: true,
+    useUnifiedTopology: true 
 }).then(() => console.log('MongoDB Connected')).catch(err => console.log(err));
 
 app.use(passport.initialize());
@@ -22,6 +24,7 @@ app.use(passport.initialize());
 require('./config/passport')(passport);
 
 app.use('/api/users', users);
+app.use('/api/product', product);
 
 if (process.env.NODE_ENV === 'production') {
 

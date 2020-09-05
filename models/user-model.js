@@ -22,12 +22,19 @@ const UserSchema = new Schema({
     avatar: {
         type: String
     },
-    createdOn: {
-        type: Date,
-        default: Date.now
-    },
     contactNo: {
         type: Number
+    },
+    roletype: {
+        type: String,
+        required: true
+    },
+    createdOn: {
+        type: Date,
+    },
+    modifiedAt: {
+        type: Date,
+        default: Date.now()
     }
 });
 
