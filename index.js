@@ -2,13 +2,16 @@
 
 try {
 
-    var express = require('express');
-    var app = express();
-    var cors = require('cors');
-    var Logger = require('./Logger/Logger').Logger;
-    var bodyParser = require("body-parser");
-    var prefix = '/webapi.api';
-    var port = 3000 | process.env.port;
+    const express = require('express');
+    const app = express();
+    const cors = require('cors');
+    const Logger = require('./Logger/Logger').Logger;
+    const bodyParser = require("body-parser");
+    const prefix = '/webapi.api';
+    const port = 3001 | process.env.port;
+    const mongoose = require('mongoose');
+    const db = require('./config/keys').mongoURI;
+
 
 
 
@@ -16,7 +19,7 @@ try {
     app.use(bodyParser.json());
 
 
-    var corsOptions = {
+    let corsOptions = {
         origin: 'http://localhost:3000',
         methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
         preflightContinue: true,
@@ -31,9 +34,21 @@ try {
         Logger.info("API hosted successfully for port " + port);
         console.log("API api hosted successfully for port " + port);
 
+        mongoose
+            .connect(db, { useNewUrlParser: true , useUnifiedTopology:true})
+            .then(() => Logger.info("DB Connected"))
+            .catch(err => Logger.error("DB Connecting error " + err));
+
+ 
+
         app.use(prefix, require('./Routes/Home'));
+        app.use(prefix, require('./Routes/User'));
+        app.use(prefix, require('./Routes/Category'));
 
 
+
+
+        
 
     });
 
