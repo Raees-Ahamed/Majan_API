@@ -54,6 +54,8 @@ try {
         app.use(prefix, require('./Routes/User'));
         app.use(prefix, require('./Routes/Category'));
         app.use(prefix, require('./Routes/Product'));
+        app.use(prefix, require('./Routes/Order'));
+
 
 
 

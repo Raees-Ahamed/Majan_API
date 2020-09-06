@@ -1,20 +1,32 @@
 var express = require('express');
 var router = express.Router();
 const Category = require('../Models/Category');
+const validationCategoryInput = require("../validation/Category");
 
 
 
-router.post('/Category', async (request, result) => {
+router.post('/Category', async (req, res) => {
 
     try {
 
+        const { error, isValid } = validationCategoryInput(req.body);
+
+        if (isValid === false) {
+            return res.status(400).send({
+                isValid: isValid,
+                description: error
+            })
+        }
+
+
+
         Category.findOne({
-            categoryName: request.body.categoryName
+            categoryName: req.body.categoryName
         }).then(category => {
 
             if (category) {
 
-                return result.status(400).send({
+                return res.status(400).send({
                     isValid: false,
                     description: "Category already present with this name"
                 });
@@ -23,9 +35,9 @@ router.post('/Category', async (request, result) => {
 
                 let category = new Category({
 
-                    categoryName: request.body.categoryName,
-                    description: request.body.description,
-                    imageUrl: request.body.imageUrl
+                    categoryName: req.body.categoryName,
+                    description: req.body.description,
+                    imageUrl: req.body.imageUrl
 
                 });
 
@@ -33,13 +45,13 @@ router.post('/Category', async (request, result) => {
                 category.save((err, data) => {
                     if (err) {
 
-                        return result.status(400).send({
+                        return res.status(400).send({
                             isValid: false,
                             description: "Category saving error.",
                         });
 
                     } else {
-                        return result.status(400).send({
+                        return res.status(200).send({
                             isValid: true,
                             description: "Category saved Successfuly",
                         });
@@ -52,7 +64,7 @@ router.post('/Category', async (request, result) => {
 
 
     } catch (ex) {
-        return result.status(501).send({
+        return res.status(501).send({
             isValid: false,
             description: "server side error occurred! Please try again shortly.." 
         });
@@ -62,21 +74,21 @@ router.post('/Category', async (request, result) => {
 })
 
 
-router.get('/Category', async (request, result) => {
+router.get('/Category', async (req, res) => {
 
     try{
         Category.find((err,data)=>{
             if(!err)
-               return result.status(400).send(data);
+               return res.status(400).send(data);
             else{
-                return result.status(400).send({
+                return res.status(400).send({
                     isValid: false,
                     description: "No categories found." 
                 });
             }
         })
     } catch (ex) {
-        return result.status(501).send({
+        return res.status(501).send({
             isValid: false,
             description: "server side error occurred! Please try again shortly.." 
         });
