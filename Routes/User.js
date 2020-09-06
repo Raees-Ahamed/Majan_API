@@ -33,7 +33,7 @@ router.get('/User/:email/:pwd', (req, res, next) => {
 
                 let token = jwt.sign({ id: user._id, email: user.email }, SECRET_KEY);
 
-                return res.status(400).send({
+                return res.status(200).send({
                     isValid: true,
                     token: token
                 });

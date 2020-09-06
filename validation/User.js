@@ -8,24 +8,41 @@ userValidations.validateSignIn = function (email, pwd) {
     email = !isEmpty(email) ? email : '';
     pwd = !isEmpty(pwd) ? pwd : '';
 
-    if (!Validator.isEmail(email)) {
+
+    if(email==='unsafe' && pwd === 'unsafe'){
+        return{
+            error: "Please enter userName and Password",
+            isValid: false
+        }
+    }
+
+
+    else if (!Validator.isEmail(email)) {
         errors.email = 'Email is invalid';
+        return {
+            error: errors.email,
+            isValid: isEmpty(errors)
+        };
     }
 
     else if (Validator.isEmpty(email)) {
         errors.email = 'Email field is required';
+        return {
+            error: errors.email,
+            isValid: isEmpty(errors)
+        };
     }
 
     else if (Validator.isEmpty(pwd)) {
         errors.password = 'Password field is required';
+        return {
+            error: errors.password,
+            isValid: isEmpty(errors)
+        };
     }
 
-    let error = errors.email ? errors.email : errors.password;
 
-    return {
-        error: error,
-        isValid: isEmpty(errors)
-    };
+
 };
 
 
