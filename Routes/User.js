@@ -13,13 +13,17 @@ router.get('/User/:email/:pwd', (req, res, next) => {
 
     try {
 
-        const { error, isValid } = userValidations.validateSignIn(req.params.email, req.params.pwd);
+        const validationCheck = userValidations.validateSignIn(req.params.email, req.params.pwd);
 
-        if (isValid === false) {
+        if (validationCheck.isValid === false) {
 
             return res.status(400).send({
-                isValid: isValid,
-                description: error
+
+                "isValid": validationCheck.isValid,
+                "Email": validationCheck.Email,
+                "Password": validationCheck.Password,
+                "Description": validationCheck.Description,
+                "token": ''
             })
         }
 
@@ -34,13 +38,23 @@ router.get('/User/:email/:pwd', (req, res, next) => {
                 let token = jwt.sign({ id: user._id, email: user.email }, SECRET_KEY);
 
                 return res.status(200).send({
-                    isValid: true,
-                    token: token
+
+                    "isValid": true,
+                    "Email": true,
+                    "Password": true,
+                    "Description": 'User present',
+                    "token": token
+
                 });
             } else {
                 return res.status(400).send({
-                    isValid: false,
-                    description: "User does not exist"
+
+                    "isValid": false,
+                    "Email": false,
+                    "Password": false,
+                    "Description": 'User does not exist',
+                    "token": ''
+
                 });
             }
         });
@@ -64,7 +78,7 @@ router.post('/User', async (request, result) => {
 
         const { error, isValid } = userValidations.validateSignUp(request.body);
         if (isValid === false) {
-           return result.status(400).send({
+            return result.status(400).send({
                 isValid: isValid,
                 description: error
             })
@@ -120,7 +134,7 @@ router.post('/User', async (request, result) => {
     } catch (ex) {
         return result.status(501).send({
             isValid: false,
-            description: "server side error occurred! Please try again shortly.."+ex,
+            description: "server side error occurred! Please try again shortly.." + ex,
         });
     }
 

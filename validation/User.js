@@ -1,45 +1,44 @@
 const Validator = require('validator');
 const isEmpty = require('./is-empty');
 const userValidations = exports.userValidations = {};
+const returnMessage = require('./MessageHandelling');
 
 userValidations.validateSignIn = function (email, pwd) {
-    let errors = {};
 
-    email = !isEmpty(email) ? email : '';
-    pwd = !isEmpty(pwd) ? pwd : '';
+    try {
+
+        email = !isEmpty(email) ? email : '';
+        pwd = !isEmpty(pwd) ? pwd : '';
 
 
-    if(email==='unsafe' && pwd === 'unsafe'){
-        return{
-            error: "Please enter userName and Password",
-            isValid: false
-        }
+        if (email === 'unsafe' && pwd === 'unsafe')
+            return returnMessage(false, false, false, "Please enter userName and Password");
+
+
+        else if (Validator.isEmpty(email) || email === 'unsafe')
+            return returnMessage(false, false, true, "Email is required");
+
+
+
+        else if (!Validator.isEmail(email))
+            return returnMessage(false, false, true, "Invalid email address");
+
+
+
+        else if (Validator.isEmpty(pwd) || pwd === 'unsafe')
+            return returnMessage(false, true, false, "Password is required");
+
+        else
+            return returnMessage(true, true, true, "");
+
+
+
+
+
+    } catch (ex) {
+        return returnMessage(false, false, false, ex);
     }
 
-
-    else if (!Validator.isEmail(email)) {
-        errors.email = 'Email is invalid';
-        return {
-            error: errors.email,
-            isValid: isEmpty(errors)
-        };
-    }
-
-    else if (Validator.isEmpty(email)) {
-        errors.email = 'Email field is required';
-        return {
-            error: errors.email,
-            isValid: isEmpty(errors)
-        };
-    }
-
-    else if (Validator.isEmpty(pwd)) {
-        errors.password = 'Password field is required';
-        return {
-            error: errors.password,
-            isValid: isEmpty(errors)
-        };
-    }
 
 
 
