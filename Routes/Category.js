@@ -19,7 +19,6 @@ router.post('/Category', async (req, res) => {
         }
 
 
-
         Category.findOne({
             categoryName: req.body.categoryName
         }).then(category => {
@@ -34,17 +33,14 @@ router.post('/Category', async (req, res) => {
             } else {
 
                 let category = new Category({
-
                     categoryName: req.body.categoryName,
                     description: req.body.description,
                     imageUrl: req.body.imageUrl
-
                 });
 
 
                 category.save((err, data) => {
                     if (err) {
-
                         return res.status(400).send({
                             isValid: false,
                             description: "Category saving error.",

@@ -43,6 +43,10 @@ const ProductSchema = new Schema({
     type: Number,
     required: true,
   },
+  taxPercent: {
+    type: Number,
+    required: true,
+  },
   currency: {
     type: String,
     required: true,
@@ -51,13 +55,17 @@ const ProductSchema = new Schema({
     type: Number,
     required: true,
   },
-  createdOn: {
-    type: Date,
+  createdAt: {
+    type: Date
   },
   modifiedAt: {
     type: Date,
     default: Date.now(),
   },
+  isActive: {
+    type: Boolean,
+    default: true
+  }
 });
 
 
