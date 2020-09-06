@@ -6,8 +6,3 @@ password.encrypt = encryptPassword = (pwd) => {
 }
 
 
-password.decrypt = decryptPassword = (pwd) => {
-    return (crypto.createHash('md5').update(pwd).digest("hex"));
-}
-
-

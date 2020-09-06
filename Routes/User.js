@@ -4,7 +4,10 @@ let password = require('../AppHelp/Password').password;
 let userValidations = require('../validation/User').userValidations;
 const User = require('../Models/User');
 const mongoObjectId = require('mongoose').Types.ObjectId;
+const jwt = require("jsonwebtoken");
 
+
+const SECRET_KEY = "123456789";
 
 router.get('/User/:email/:pwd', (req, res, next) => {
 
@@ -27,9 +30,12 @@ router.get('/User/:email/:pwd', (req, res, next) => {
         }).then(user => {
 
             if (user) {
+
+                let token = jwt.sign({ id: user._id, email: user.email }, SECRET_KEY);
+
                 return res.status(400).send({
                     isValid: true,
-                    description: "User present"
+                    token: token
                 });
             } else {
                 return res.status(400).send({

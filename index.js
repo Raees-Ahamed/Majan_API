@@ -30,6 +30,15 @@ try {
     app.options(corsOptions, cors());
 
 
+    if (process.env.NODE_ENV === 'production') {
+        app.use(express.static('client/build'));
+        app.get('*', (req, res) => {
+            res.sendFile(path.resolve(__dirname, 'client', 'build', 'index.html'));
+        });
+    }
+
+
+
     app.listen((port), function () {
         Logger.info("API hosted successfully for port " + port);
         console.log("API api hosted successfully for port " + port);
@@ -44,11 +53,9 @@ try {
         app.use(prefix, require('./Routes/Home'));
         app.use(prefix, require('./Routes/User'));
         app.use(prefix, require('./Routes/Category'));
+        app.use(prefix, require('./Routes/Product'));
 
 
-
-
-        
 
     });
 

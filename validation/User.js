@@ -104,6 +104,11 @@ userValidations.validateSignUp = function (body) {
         };
     }
 
+    return {
+        errors,
+        isValid: isEmpty(errors)
+    };
+
 
 
 }

@@ -64,24 +64,17 @@ router.post('/Category', async (request, result) => {
 
 router.get('/Category', async (request, result) => {
 
-    try {
-
+    try{
         Category.find((err,data)=>{
-
-            if(!err){
+            if(!err)
                return result.status(400).send(data);
-            }
             else{
                 return result.status(400).send({
                     isValid: false,
-                    description: "Category geeting error." 
+                    description: "No categories found." 
                 });
             }
-
-
         })
-
-
     } catch (ex) {
         return result.status(501).send({
             isValid: false,

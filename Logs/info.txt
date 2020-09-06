@@ -219,3 +219,58 @@ Fri Sep 04 2020 01:43:18 GMT+0530 (India Standard Time) : DB Connected
 Fri Sep 04 2020 01:43:30 GMT+0530 (India Standard Time) : API hosted successfully for port 3001
 Fri Sep 04 2020 01:43:38 GMT+0530 (India Standard Time) : API hosted successfully for port 3001
 Fri Sep 04 2020 01:43:46 GMT+0530 (India Standard Time) : DB Connected
+Sat Sep 05 2020 22:56:30 GMT+0530 (India Standard Time) : API hosted successfully for port 3001
+Sat Sep 05 2020 22:56:55 GMT+0530 (India Standard Time) : DB Connected
+Sat Sep 05 2020 22:57:25 GMT+0530 (India Standard Time) : API hosted successfully for port 3001
+Sat Sep 05 2020 22:57:34 GMT+0530 (India Standard Time) : DB Connected
+Sat Sep 05 2020 22:59:18 GMT+0530 (India Standard Time) : API hosted successfully for port 3001
+Sat Sep 05 2020 22:59:22 GMT+0530 (India Standard Time) : DB Connected
+Sat Sep 05 2020 23:01:29 GMT+0530 (India Standard Time) : API hosted successfully for port 3001
+Sat Sep 05 2020 23:01:33 GMT+0530 (India Standard Time) : DB Connected
+Sat Sep 05 2020 23:04:49 GMT+0530 (India Standard Time) : API hosted successfully for port 3001
+Sat Sep 05 2020 23:04:52 GMT+0530 (India Standard Time) : DB Connected
+Sat Sep 05 2020 23:05:13 GMT+0530 (India Standard Time) : API hosted successfully for port 3001
+Sat Sep 05 2020 23:05:21 GMT+0530 (India Standard Time) : DB Connected
+Sat Sep 05 2020 23:06:29 GMT+0530 (India Standard Time) : API hosted successfully for port 3001
+Sat Sep 05 2020 23:06:32 GMT+0530 (India Standard Time) : DB Connected
+Sat Sep 05 2020 23:13:18 GMT+0530 (India Standard Time) : API hosted successfully for port 3001
+Sat Sep 05 2020 23:13:22 GMT+0530 (India Standard Time) : DB Connected
+Sat Sep 05 2020 23:13:57 GMT+0530 (India Standard Time) : API hosted successfully for port 3001
+Sat Sep 05 2020 23:14:06 GMT+0530 (India Standard Time) : DB Connected
+Sun Sep 06 2020 02:01:23 GMT+0530 (India Standard Time) : API hosted successfully for port 3001
+Sun Sep 06 2020 02:01:47 GMT+0530 (India Standard Time) : DB Connected
+Sun Sep 06 2020 02:02:28 GMT+0530 (India Standard Time) : API hosted successfully for port 3001
+Sun Sep 06 2020 02:02:30 GMT+0530 (India Standard Time) : API hosted successfully for port 3001
+Sun Sep 06 2020 02:02:33 GMT+0530 (India Standard Time) : DB Connected
+Sun Sep 06 2020 02:03:52 GMT+0530 (India Standard Time) : API hosted successfully for port 3001
+Sun Sep 06 2020 02:03:55 GMT+0530 (India Standard Time) : DB Connected
+Sun Sep 06 2020 02:04:41 GMT+0530 (India Standard Time) : API hosted successfully for port 3001
+Sun Sep 06 2020 02:04:49 GMT+0530 (India Standard Time) : DB Connected
+Sun Sep 06 2020 02:06:53 GMT+0530 (India Standard Time) : API hosted successfully for port 3001
+Sun Sep 06 2020 02:06:57 GMT+0530 (India Standard Time) : DB Connected
+Sun Sep 06 2020 02:07:14 GMT+0530 (India Standard Time) : API hosted successfully for port 3001
+Sun Sep 06 2020 02:07:39 GMT+0530 (India Standard Time) : DB Connected
+Sun Sep 06 2020 02:08:40 GMT+0530 (India Standard Time) : API hosted successfully for port 3001
+Sun Sep 06 2020 02:08:43 GMT+0530 (India Standard Time) : DB Connected
+Sun Sep 06 2020 02:08:53 GMT+0530 (India Standard Time) : API hosted successfully for port 3001
+Sun Sep 06 2020 02:09:14 GMT+0530 (India Standard Time) : DB Connected
+Sun Sep 06 2020 02:10:49 GMT+0530 (India Standard Time) : API hosted successfully for port 3001
+Sun Sep 06 2020 02:10:55 GMT+0530 (India Standard Time) : DB Connected
+Sun Sep 06 2020 02:11:13 GMT+0530 (India Standard Time) : API hosted successfully for port 3001
+Sun Sep 06 2020 02:11:21 GMT+0530 (India Standard Time) : DB Connected
+Sun Sep 06 2020 02:12:10 GMT+0530 (India Standard Time) : API hosted successfully for port 3001
+Sun Sep 06 2020 02:12:13 GMT+0530 (India Standard Time) : DB Connected
+Sun Sep 06 2020 02:14:48 GMT+0530 (India Standard Time) : API hosted successfully for port 3001
+Sun Sep 06 2020 02:14:56 GMT+0530 (India Standard Time) : DB Connected
+Sun Sep 06 2020 02:15:50 GMT+0530 (India Standard Time) : API hosted successfully for port 3001
+Sun Sep 06 2020 02:15:53 GMT+0530 (India Standard Time) : DB Connected
+Sun Sep 06 2020 02:17:35 GMT+0530 (India Standard Time) : API hosted successfully for port 3001
+Sun Sep 06 2020 02:17:38 GMT+0530 (India Standard Time) : DB Connected
+Sun Sep 06 2020 02:17:56 GMT+0530 (India Standard Time) : API hosted successfully for port 3001
+Sun Sep 06 2020 02:18:04 GMT+0530 (India Standard Time) : DB Connected
+Sun Sep 06 2020 02:23:19 GMT+0530 (India Standard Time) : API hosted successfully for port 3001
+Sun Sep 06 2020 02:23:29 GMT+0530 (India Standard Time) : DB Connected
+Sun Sep 06 2020 02:28:24 GMT+0530 (India Standard Time) : API hosted successfully for port 3001
+Sun Sep 06 2020 02:28:28 GMT+0530 (India Standard Time) : DB Connected
+Sun Sep 06 2020 02:30:38 GMT+0530 (India Standard Time) : API hosted successfully for port 3001
+Sun Sep 06 2020 02:30:46 GMT+0530 (India Standard Time) : DB Connected
