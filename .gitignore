@@ -21,3 +21,6 @@
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
+node_modules/date-fns/esm/fp/getDay/index.js
+/node_modules
+/node_modules
