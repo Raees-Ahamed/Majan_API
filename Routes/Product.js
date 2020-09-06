@@ -32,8 +32,9 @@ router.post("/Product", (req, res) => {
             unitPrice: req.body.unitPrice,
             originPrice: req.body.originPrice,
             discountPercent: req.body.discountPercent,
+            taxPercent: req.body.taxPercent,
             currency: req.body.currency,
-            createdOn: Date.now()
+            createdAt: Date.now()
         });
 
         newProduct.save((err, data) => {
@@ -117,8 +118,10 @@ router.put('/Product/:id', (req, res) => {
             unitPrice: req.body.unitPrice,
             originPrice: req.body.originPrice,
             discountPercent: req.body.discountPercent,
+            taxPercent: req.body.taxPercent,
             currency: req.body.currency
         };
+
 
         Product.findByIdAndUpdate(req.params.id, { $set: ProductUpdate }, { new: true, useFindAndModify: false }, (err, data) => {
 
@@ -140,7 +143,7 @@ router.put('/Product/:id', (req, res) => {
     } catch (ex) {
         return res.status(500).send({
             isValid: true,
-            description: "server side error occurred! Please try again shortly.." 
+            description: "server side error occurred! Please try again shortly.."
         });
     }
 

@@ -1,7 +1,7 @@
 const Validator = require('validator');
 const isEmpty = require('./is-empty');
 const userValidations = exports.userValidations = {};
-const returnMessage = require('./MessageHandelling');
+const returnMessage = require('./MessageHandelling').returnMessage;
 
 userValidations.validateSignIn = function (email, pwd) {
 
@@ -12,24 +12,24 @@ userValidations.validateSignIn = function (email, pwd) {
 
 
         if (email === 'unsafe' && pwd === 'unsafe')
-            return returnMessage(false, false, false, "Please enter userName and Password");
+            return returnMessage.userSignInReturnMessage(false, false, false, "Please enter userName and Password");
 
 
         else if (Validator.isEmpty(email) || email === 'unsafe')
-            return returnMessage(false, false, true, "Email is required");
+            return returnMessage.userSignInReturnMessage(false, false, true, "Email is required");
 
 
 
         else if (!Validator.isEmail(email))
-            return returnMessage(false, false, true, "Invalid email address");
+            return returnMessage.userSignInReturnMessage(false, false, true, "Invalid email address");
 
 
 
         else if (Validator.isEmpty(pwd) || pwd === 'unsafe')
-            return returnMessage(false, true, false, "Password is required");
+            return returnMessage.userSignInReturnMessage(false, true, false, "Password is required");
 
         else
-            return returnMessage(true, true, true, "");
+            return returnMessage.userSignInReturnMessage(true, true, true, "");
 
 
 
