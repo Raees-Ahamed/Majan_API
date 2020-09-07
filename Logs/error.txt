@@ -1,2 +1,19 @@
 Fri Sep 04 2020 00:15:00 GMT+0530 (India Standard Time) : DB Connecting error Error: querySrv ETIMEOUT _mongodb._tcp.cluster0.jlbmc.azure.mongodb.net
 Sun Sep 06 2020 13:29:13 GMT+0530 (India Standard Time) : DB Connecting error MongoNetworkTimeoutError: connection timed out
+Mon Sep 07 2020 04:34:45 GMT+0530 (India Standard Time) : DB Connecting error Error: querySrv ETIMEOUT _mongodb._tcp.cluster0.jlbmc.azure.mongodb.net
+Mon Sep 07 2020 13:55:18 GMT+0530 (India Standard Time) : DB Connecting error MongoNetworkTimeoutError: connection 1 to 20.44.127.137:27017 timed out
+Mon Sep 07 2020 15:21:21 GMT+0530 (India Standard Time) : DB Connecting error Error: querySrv ECONNREFUSED _mongodb._tcp.cluster0.jlbmc.azure.mongodb.net
+Mon Sep 07 2020 15:22:19 GMT+0530 (India Standard Time) : DB Connecting error Error: querySrv ECONNREFUSED _mongodb._tcp.cluster0.jlbmc.azure.mongodb.net
+Mon Sep 07 2020 15:25:55 GMT+0530 (India Standard Time) : DB Connecting error Error: querySrv ECONNREFUSED _mongodb._tcp.cluster0.jlbmc.azure.mongodb.net
+Mon Sep 07 2020 15:26:40 GMT+0530 (India Standard Time) : DB Connecting error Error: querySrv ECONNREFUSED _mongodb._tcp.cluster0.jlbmc.azure.mongodb.net
+Mon Sep 07 2020 15:32:13 GMT+0530 (India Standard Time) : DB Connecting error Error: querySrv ECONNREFUSED _mongodb._tcp.cluster0.jlbmc.azure.mongodb.net
+Mon Sep 07 2020 15:32:54 GMT+0530 (India Standard Time) : DB Connecting error Error: querySrv ECONNREFUSED _mongodb._tcp.cluster0.jlbmc.azure.mongodb.net
+Mon Sep 07 2020 15:33:18 GMT+0530 (India Standard Time) : DB Connecting error Error: querySrv ECONNREFUSED _mongodb._tcp.cluster0.jlbmc.azure.mongodb.net
+Mon Sep 07 2020 15:37:35 GMT+0530 (India Standard Time) : DB Connecting error Error: querySrv ECONNREFUSED _mongodb._tcp.cluster0.jlbmc.azure.mongodb.net
+Mon Sep 07 2020 15:38:11 GMT+0530 (India Standard Time) : DB Connecting error Error: querySrv ECONNREFUSED _mongodb._tcp.cluster0.jlbmc.azure.mongodb.net
+Mon Sep 07 2020 15:41:09 GMT+0530 (India Standard Time) : DB Connecting error Error: querySrv ECONNREFUSED _mongodb._tcp.cluster0.jlbmc.azure.mongodb.net
+Mon Sep 07 2020 15:41:16 GMT+0530 (India Standard Time) : DB Connecting error Error: querySrv ECONNREFUSED _mongodb._tcp.cluster0.jlbmc.azure.mongodb.net
+Mon Sep 07 2020 15:41:30 GMT+0530 (India Standard Time) : DB Connecting error Error: querySrv ECONNREFUSED _mongodb._tcp.cluster0.jlbmc.azure.mongodb.net
+Mon Sep 07 2020 15:41:42 GMT+0530 (India Standard Time) : DB Connecting error Error: querySrv ECONNREFUSED _mongodb._tcp.cluster0.jlbmc.azure.mongodb.net
+Mon Sep 07 2020 15:42:00 GMT+0530 (India Standard Time) : DB Connecting error Error: querySrv ECONNREFUSED _mongodb._tcp.cluster0.jlbmc.azure.mongodb.net
+Mon Sep 07 2020 15:48:02 GMT+0530 (India Standard Time) : DB Connecting error Error: querySrv ECONNREFUSED _mongodb._tcp.cluster0.jlbmc.azure.mongodb.net

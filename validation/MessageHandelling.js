@@ -9,3 +9,12 @@ returnMessage.userSignInReturnMessage = (isValid, Email, Password, Description) 
     }
 }
 
+
+returnMessage.globalOne = (isValid, statusCode, Description, res) => {
+    return res.status(statusCode).send({
+        isValid: isValid,
+        Description: Description
+    })
+}
+
+
