@@ -55,7 +55,11 @@ try {
         app.use(prefix, require('./Routes/Category'));
         app.use(prefix, require('./Routes/Product'));
         app.use(prefix, require('./Routes/Order'));
-        app.use(prefix, require('./Routes/Product-N-Category'));
+        app.use(prefix, require('./Routes/Product-Category'));
+        app.use(prefix, require('./Routes/Dashbord'));
+        app.use(prefix, require('./Routes/Selling'));
+
+
 
 
 

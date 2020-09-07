@@ -1,7 +1,5 @@
 const express = require("express");
 const router = express.Router();
-const passport = require("passport");
-const mongoose = require('mongoose');
 const mongoObjectId = require('mongoose').Types.ObjectId;
 const Product = require("../Models/ProductModel");
 const validationProductInput = require("../validation/Product");
@@ -121,7 +119,8 @@ router.put('/Product/:id', (req, res) => {
             originPrice: req.body.originPrice,
             discountPercent: req.body.discountPercent,
             taxPercent: req.body.taxPercent,
-            currency: req.body.currency
+            currency: req.body.currency,
+            modifiedAt:Date.now()
         };
 
 
