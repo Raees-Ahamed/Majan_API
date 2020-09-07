@@ -32,7 +32,7 @@ router.post('/Order', async (req, res) => {
             orderItems.push(createOrderItemObject(orderItem));
         });
 
-        let ProductUpdatedStatus = updateProductQuantity(orderItems);
+        let ProductUpdatedStatus = await updateProductQuantity(orderItems);
         if (ProductUpdatedStatus != "") {
             return returnMessage.globalOne(false, 401, ProductUpdatedStatus, res);
         }
@@ -132,14 +132,14 @@ updateProductQuantity = async (orderItems) => {
 
     if ((filteredProducts) && (orderItems.length === filteredProducts.length)) {
 
-        filteredProducts.forEach((product, i) => {
+        filteredProducts.forEach(async (product, i) => {
 
             let customerSelectedItem = orderItems.filter(item => item.productId === product.id)[0];
             if (checkProductQuantityGettingMinius(product, customerSelectedItem) === true) {
 
-                Product.findByIdAndUpdate(
+               await Product.findByIdAndUpdate(
                     { _id: product.id },
-                    { $set: { availableQuantity: product.availableQuantity - singleProduct.quantity } },
+                    { $set: { availableQuantity: product.availableQuantity - customerSelectedItem.quantity, modifiedAt: Date.now() } },
                     { new: true, useFindAndModify: false },
                     (err, data) => {
                         if (err) ProductUpdatedStatus = err;
