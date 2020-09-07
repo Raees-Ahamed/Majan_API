@@ -66,11 +66,13 @@ router.post("/Product", (req, res) => {
 router.get("/Product", (req, res) => {
     Product.find()
         .sort({ date: -1 })
-        .then((product) => res.send(product))
-        .catch((err) => res.status(500).send({
-            isValid: false,
-            description: "No product found",
-        }));
+        .then((product) => res.status(200).send(product))
+        .catch((err) => {
+            res.status(500).send({
+                isValid: false,
+                description: "No product found",
+            })
+        });
 });
 
 
