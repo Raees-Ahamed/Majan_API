@@ -11,6 +11,10 @@ try {
     const port = 3001 | process.env.port;
     const mongoose = require('mongoose');
     const db = require('./config/keys').mongoURI;
+    const passport = require('passport');
+    const path = require('path');
+
+
 
 
 
@@ -48,7 +52,8 @@ try {
             .then(() => Logger.info("DB Connected"))
             .catch(err => Logger.error("DB Connecting error " + err));
 
- 
+        // require('./config/passport')(passport);
+
 
         app.use(prefix, require('./Routes/Home'));
         app.use(prefix, require('./Routes/User'));
