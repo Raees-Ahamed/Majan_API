@@ -18,7 +18,7 @@ router.get('/User/:email/:pwd', (req, res, next) => {
         const validationCheck = userValidations.validateSignIn(req.params.email, req.params.pwd);
 
         if (validationCheck.isValid === false)
-            return returnMessage.user(validationCheck.isValid, validationCheck.Email, validationCheck.Password, validationCheck.Description, "", 400, res);
+            return returnMessage.userLogin(validationCheck.isValid, validationCheck.Email, validationCheck.Password, validationCheck.Description, "", 400, res);
 
         User.findOne({
             email: req.params.email,
@@ -27,14 +27,14 @@ router.get('/User/:email/:pwd', (req, res, next) => {
         }).then(user => {
 
             if (user) {
-                let token = jwt.sign({ id: user._id, email: user.email }, SECRET_KEY);
-                return returnMessage.user(true, true, true, "User present", token, 200, res);
+                let token = jwt.sign({ id: user.id, email: user.email }, SECRET_KEY);
+                return returnMessage.userLogin(true, true, true, "User present", token, 200, res);
             }
-            else return returnMessage.user(false, false, false, "User does not exist", "", 404, res);
+            else return returnMessage.userLogin(false, false, false, "User does not exist", "", 404, res);
         });
 
     } catch (ex) {
-        return returnMessage.user(false, false, false, "server side error occurred! Please try again shortly..", "", 501, res);
+        return returnMessage.userLogin(false, false, false, "server side error occurred! Please try again shortly..", "", 501, res);
     }
 
 

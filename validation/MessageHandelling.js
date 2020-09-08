@@ -26,7 +26,7 @@ returnMessage.userSignUpValidation = (isValid, fName, lName, email, mobileNum, p
 
 
 
-returnMessage.user = (isValid, Email, Password, Description, token, statusCode, res) => {
+returnMessage.userLogin = (isValid, Email, Password, Description, token, statusCode, res) => {
     return res.status(statusCode).send({
         isValid: isValid,
         Email: Email,
