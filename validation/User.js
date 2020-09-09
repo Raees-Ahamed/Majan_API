@@ -75,6 +75,9 @@ userValidations.validateSignUp = function (body) {
         else if (typeof (body.mobileNum) != 'number' && Validator.isEmpty(body.mobileNum))
             return returnMessage.userSignUpValidation(false, true, true, true, false, true, true, "Mobile number is rerquired");
 
+        else if (typeof (body.mobileNum) === 'number' && body.mobileNum === 0)
+            return returnMessage.userSignUpValidation(false, true, true, true, false, true, true, "Mobile number is rerquired");
+
 
         else if (Validator.isEmpty(body.password))
             return returnMessage.userSignUpValidation(false, true, true, true, true, false, true, "Password field is required");
