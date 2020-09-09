@@ -2,12 +2,14 @@ var express = require('express');
 var router = express.Router();
 let password = require('../AppHelp/Password').password;
 let userValidations = require('../validation/User').userValidations;
-const User = require('../Models/User');
-const mongoObjectId = require('mongoose').Types.ObjectId;
 const jwt = require("jsonwebtoken");
 
+const returnMessage = require('../validation/MessageHandelling').returnMessage;
+const User = require('../Models/User');
 
-const SECRET_KEY = "123456789";
+
+const SECRET_KEY = require('../config/keys').secretOrKey;
+
 
 router.get('/User/:email/:pwd', (req, res, next) => {
 
@@ -15,17 +17,8 @@ router.get('/User/:email/:pwd', (req, res, next) => {
 
         const validationCheck = userValidations.validateSignIn(req.params.email, req.params.pwd);
 
-        if (validationCheck.isValid === false) {
-
-            return res.status(400).send({
-
-                "isValid": validationCheck.isValid,
-                "Email": validationCheck.Email,
-                "Password": validationCheck.Password,
-                "Description": validationCheck.Description,
-                "token": ''
-            })
-        }
+        if (validationCheck.isValid === false)
+            return returnMessage.userLogin(validationCheck.isValid, validationCheck.Email, validationCheck.Password, validationCheck.Description, "", 400, res);
 
         User.findOne({
             email: req.params.email,
@@ -34,36 +27,14 @@ router.get('/User/:email/:pwd', (req, res, next) => {
         }).then(user => {
 
             if (user) {
-
-                let token = jwt.sign({ id: user._id, email: user.email }, SECRET_KEY);
-
-                return res.status(200).send({
-
-                    "isValid": true,
-                    "Email": true,
-                    "Password": true,
-                    "Description": 'User present',
-                    "token": token
-
-                });
-            } else {
-                return res.status(400).send({
-
-                    "isValid": false,
-                    "Email": false,
-                    "Password": false,
-                    "Description": 'User does not exist',
-                    "token": ''
-
-                });
+                let token = jwt.sign({ id: user.id, email: user.email }, SECRET_KEY);
+                return returnMessage.userLogin(true, true, true, "User present", token, 200, res);
             }
+            else return returnMessage.userLogin(false, false, false, "User does not exist", "", 404, res);
         });
 
     } catch (ex) {
-        return res.status(501).send({
-            isValid: false,
-            description: "server side error occurred! Please try again shortly.."
-        });
+        return returnMessage.userLogin(false, false, false, "server side error occurred! Please try again shortly..", "", 501, res);
     }
 
 
@@ -72,38 +43,30 @@ router.get('/User/:email/:pwd', (req, res, next) => {
 });
 
 
-router.post('/User', async (request, result) => {
+router.post('/User', async (request, res) => {
 
     try {
 
-        const { error, isValid } = userValidations.validateSignUp(request.body);
-        if (isValid === false) {
-            return result.status(400).send({
-                isValid: isValid,
-                description: error
-            })
-        }
-
+        const validationCheck = userValidations.validateSignUp(request.body);
+        if (validationCheck.isValid === false)
+            return returnMessage.user(validationCheck.isValid, validationCheck.fName, validationCheck.lName, validationCheck.email, validationCheck.mobileNum, validationCheck.pwd, validationCheck.confirmPwd, validationCheck.Description, "", 400, res, "");
 
 
         User.findOne({
             email: request.body.email
         }).then(user => {
 
-            if (user) {
+            if (user)
+                return returnMessage.user(false, validationCheck.fName, validationCheck.lName, validationCheck.email, validationCheck.mobileNum, validationCheck.pwd, validationCheck.confirmPwd, "User already present", "", 400, res, "");
 
-                return result.status(400).send({
-                    isValid: false,
-                    description: "User already present"
-                });
-
-            } else {
+            else {
 
                 let user = new User({
 
                     firstName: request.body.firstName,
                     lastName: request.body.lastName,
                     email: request.body.email,
+                    mobileNumber: request.body.mobileNum,
                     password: password.encrypt(request.body.password),
                     usertype: request.body.usertype
 
@@ -111,19 +74,12 @@ router.post('/User', async (request, result) => {
 
 
                 user.save((err, data) => {
-                    if (err) {
+                    if (err)
+                        return returnMessage.user(false, validationCheck.fName, validationCheck.lName, validationCheck.email, validationCheck.mobileNum, validationCheck.pwd, validationCheck.confirmPwd, "User registring error.Please try agin", "", 400, res, "");
 
-                        return result.status(400).send({
-                            isValid: false,
-                            description: "User registring error.Please try agin",
-                        });
+                    let token = jwt.sign({ id: data._id, email: data.email }, SECRET_KEY);
+                    return returnMessage.user(true, validationCheck.fName, validationCheck.lName, validationCheck.email, validationCheck.mobileNum, validationCheck.pwd, validationCheck.confirmPwd, "User registered Successfuly", token, 200, res, data.firstName);
 
-                    } else {
-                        return result.status(400).send({
-                            isValid: true,
-                            description: "User registered Successfuly",
-                        });
-                    }
                 })
             }
 
@@ -132,14 +88,15 @@ router.post('/User', async (request, result) => {
 
 
     } catch (ex) {
-        return result.status(501).send({
-            isValid: false,
-            description: "server side error occurred! Please try again shortly.." + ex,
-        });
+        return returnMessage.user(false, false, false, false, false, false, false, "server side error occurred! Please try again shortly..", "", 501, res, "");
     }
 
 
 })
+
+
+
+
 
 
 module.exports = router;

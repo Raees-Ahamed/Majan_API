@@ -3,6 +3,7 @@ const router = express.Router();
 const mongoObjectId = require('mongoose').Types.ObjectId;
 const Product = require("../Models/ProductModel");
 const validationProductInput = require("../validation/Product");
+const returnMessage = require('../validation/MessageHandelling').returnMessage;
 
 
 router.post("/Product", (req, res) => {
@@ -11,12 +12,8 @@ router.post("/Product", (req, res) => {
 
         const { error, isValid } = validationProductInput(req.body);
 
-        if (isValid === false) {
-            return res.status(400).send({
-                isValid: isValid,
-                description: error
-            })
-        }
+        if (isValid === false) return returnMessage.globalOne(isValid, 400, error, res, "");
+
 
         const newProduct = new Product({
             name: req.body.name,
@@ -36,25 +33,13 @@ router.post("/Product", (req, res) => {
         });
 
         newProduct.save((err, data) => {
-            if (err) {
-                return res.status(400).send({
-                    isValid: false,
-                    description: "Product adding error.Please try agin",
-                });
-            }
-            else {
-                return res.status(400).send({
-                    isValid: true,
-                    description: "Product created successfully",
-                });
-            }
+            if (err) return returnMessage.globalOne(false, 400, "Product adding error.Please try agin", res, err);
+            else return returnMessage.globalOne(true, 200, "Product created successfully", res, "");
+
         })
 
     } catch (ex) {
-        return res.status(500).send({
-            isValid: true,
-            description: "server side error occurred! Please try again shortly.."
-        });
+        return returnMessage.globalOne(false, 501, "server side error occurred! Please try again shortly..", res, ex);
     }
 
 });
@@ -66,20 +51,16 @@ router.get("/Product", (req, res) => {
         .sort({ date: -1 })
         .then((product) => res.status(200).send(product))
         .catch((err) => {
-            res.status(500).send({
-                isValid: false,
-                description: "No product found",
-            })
+            return returnMessage.globalOne(false, 404, "There No any product found", res, err);
         });
 });
 
 
 
 router.get('/Product/:id', (req, res) => {
-    Product.findById(req.params.id).then((product) => res.send(product)).catch((err) => res.status(500).send({
-        isValid: false,
-        description: "Profuct getting error.Please try again",
-    }));
+    Product.findById(req.params.id).then((product) => res.send(product)).catch((err) => {
+        return returnMessage.globalOne(false, 501, "Product gettiing error.Please try agian.", res, err);
+    });
 });
 
 
@@ -90,21 +71,10 @@ router.put('/Product/:id', (req, res) => {
 
     try {
 
-        if (!mongoObjectId.isValid(req.params.id)) {
-            return res.status(404).send({
-                isValid: false,
-                description: "There No record with this id"
-            });
-        }
+        if (!mongoObjectId.isValid(req.params.id)) return returnMessage.globalOne(false, 404, "There No record with this id", res, "");
 
         const { error, isValid } = validationProductInput(req.body);
-
-        if (isValid === false) {
-            return res.status(400).send({
-                isValid: isValid,
-                description: error
-            })
-        }
+        if (isValid === false) return returnMessage.globalOne(isValid, 400, error, res, "");
 
 
         const ProductUpdate = {
@@ -120,32 +90,20 @@ router.put('/Product/:id', (req, res) => {
             discountPercent: req.body.discountPercent,
             taxPercent: req.body.taxPercent,
             currency: req.body.currency,
-            modifiedAt:Date.now()
+            modifiedAt: Date.now()
         };
 
 
         Product.findByIdAndUpdate(req.params.id, { $set: ProductUpdate }, { new: true, useFindAndModify: false }, (err, data) => {
 
-            if (err) {
-                return res.status(400).send({
-                    isValid: false,
-                    description: "Product updating error."
-                })
-            } else {
-                return res.status(400).send({
-                    isValid: true,
-                    description: "Product " + data.name + " updated successfully"
-                })
-            }
+            if (err) return returnMessage.globalOne(false, 400, "Product updating error.Please try again", res, err);
+            else return returnMessage.globalOne(true, 200, "Product " + data.name + " updated successfully", res, "");
 
         })
 
 
     } catch (ex) {
-        return res.status(500).send({
-            isValid: true,
-            description: "server side error occurred! Please try again shortly.."
-        });
+        return returnMessage.globalOne(false, 501, "server side error occurred! Please try again shortly..", res, ex);
     }
 
 

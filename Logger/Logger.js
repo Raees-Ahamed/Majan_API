@@ -14,3 +14,9 @@ Logger.error = function (msg) {
   fs.appendFileSync('./Logs/error.txt', message.toString(), "UTF-8", { 'flags': 'a' })
 };
 
+
+Logger.userRequests = function (msg) {
+  message = new Date().toString() + " : " + msg + "\n";
+  fs.appendFileSync('./Logs/userRequests.txt', message.toString(), "UTF-8", { 'flags': 'a' })
+};
+

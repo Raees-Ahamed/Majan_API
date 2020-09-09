@@ -12,24 +12,24 @@ userValidations.validateSignIn = function (email, pwd) {
 
 
         if (email === 'unsafe' && pwd === 'unsafe')
-            return returnMessage.userSignInReturnMessage(false, false, false, "Please enter userName and Password");
+            return returnMessage.userSignInValidation(false, false, false, "Please enter userName and Password");
 
 
         else if (Validator.isEmpty(email) || email === 'unsafe')
-            return returnMessage.userSignInReturnMessage(false, false, true, "Email is required");
+            return returnMessage.userSignInValidation(false, false, true, "Email is required");
 
 
 
         else if (!Validator.isEmail(email))
-            return returnMessage.userSignInReturnMessage(false, false, true, "Invalid email address");
+            return returnMessage.userSignInValidation(false, false, true, "Invalid email address");
 
 
 
         else if (Validator.isEmpty(pwd) || pwd === 'unsafe')
-            return returnMessage.userSignInReturnMessage(false, true, false, "Password is required");
+            return returnMessage.userSignInValidation(false, true, false, "Password is required");
 
         else
-            return returnMessage.userSignInReturnMessage(true, true, true, "");
+            return returnMessage.userSignInValidation(true, true, true, "");
 
 
 
@@ -47,83 +47,64 @@ userValidations.validateSignIn = function (email, pwd) {
 
 userValidations.validateSignUp = function (body) {
 
-    let errors = {};
 
-    body.firstName = !isEmpty(body.firstName) ? body.firstName : '';
-    body.lastName = !isEmpty(body.lastName) ? body.lastName : '';
-    body.email = !isEmpty(body.email) ? body.email : '';
-    body.password = !isEmpty(body.password) ? body.password : '';
-    body.confirmPassword = !isEmpty(body.confirmPassword) ? body.confirmPassword : '';
+    try {
+
+        body.firstName = !isEmpty(body.firstName) ? body.firstName : '';
+        body.lastName = !isEmpty(body.lastName) ? body.lastName : '';
+        body.email = !isEmpty(body.email) ? body.email : '';
+        body.mobileNum = !isEmpty(body.mobileNum) ? body.mobileNum : '';
+        body.password = !isEmpty(body.password) ? body.password : '';
+        body.confirmPassword = !isEmpty(body.confirmPassword) ? body.confirmPassword : '';
 
 
-    if (Validator.isEmpty(body.firstName)) {
-        errors.firstName = 'First Name field is required';
-        return {
-            error: errors.firstName,
-            isValid: isEmpty(errors)
-        };
+        if (Validator.isEmpty(body.firstName))
+            return returnMessage.userSignUpValidation(false, false, true, true, true, true, true, "First Name field is required");
+
+
+        else if (Validator.isEmpty(body.lastName))
+            return returnMessage.userSignUpValidation(false, true, false, true, true, true, true, "Last Name field is required");
+
+        else if (Validator.isEmpty(body.email))
+            return returnMessage.userSignUpValidation(false, true, true, false, true, true, true, "Email field is required");
+
+        else if (!Validator.isEmail(body.email))
+            return returnMessage.userSignUpValidation(false, true, true, false, true, true, true, "Email is invalid");
+
+
+        else if (typeof (body.mobileNum) != 'number' && Validator.isEmpty(body.mobileNum))
+            return returnMessage.userSignUpValidation(false, true, true, true, false, true, true, "Mobile number is rerquired");
+
+        else if (typeof (body.mobileNum) === 'number' && body.mobileNum === 0)
+            return returnMessage.userSignUpValidation(false, true, true, true, false, true, true, "Mobile number is rerquired");
+
+
+        else if (Validator.isEmpty(body.password))
+            return returnMessage.userSignUpValidation(false, true, true, true, true, false, true, "Password field is required");
+
+
+        else if (!Validator.isLength(body.password, { min: 6, max: 30 }))
+            return returnMessage.userSignUpValidation(false, true, true, true, true, false, true, "Password must be at least 6 characters");
+
+
+        else if (Validator.isEmpty(body.confirmPassword))
+            return returnMessage.userSignUpValidation(false, true, true, true, true, true, false, "Confirm Password field is required");
+
+
+        else if (!Validator.equals(body.password, body.confirmPassword))
+            return returnMessage.userSignUpValidation(false, true, true, true, true, true, false, "Password must match");
+
+
+        else
+            return returnMessage.userSignUpValidation(true, true, true, true, true, true, true, "");
+
+    } catch (ex) {
+        return returnMessage.userSignUpValidation(false, false, false, false, false, false, false, ex);
     }
 
-    else if (Validator.isEmpty(body.lastName)) {
-        errors.lastName = 'Last Name field is required';
-        return {
-            error: errors.lastName,
-            isValid: isEmpty(errors)
-        };
-    }
 
-    else if (Validator.isEmpty(body.email)) {
-        errors.email = ' Email field is required';
-        return {
-            error: errors.email,
-            isValid: isEmpty(errors)
-        };
-    }
 
-    else if (!Validator.isEmail(body.email)) {
-        errors.email = 'Email is invalid';
-        return {
-            error: errors.email,
-            isValid: isEmpty(errors)
-        };
-    }
 
-    else if (Validator.isEmpty(body.password)) {
-        errors.password = 'Password field is required';
-        return {
-            error: errors.password,
-            isValid: isEmpty(errors)
-        };
-    }
-
-    else if (!Validator.isLength(body.password, { min: 6, max: 30 })) {
-        errors.password = 'Password must be at least 6 characters';
-        return {
-            error: errors.password,
-            isValid: isEmpty(errors)
-        };
-    }
-
-    else if (Validator.isEmpty(body.confirmPassword)) {
-        errors.confirmPassword = 'Confirm Password field is required';
-        return {
-            error: errors.confirmPassword,
-            isValid: isEmpty(errors)
-        };
-    }
-
-    else if (!Validator.equals(body.password, body.confirmPassword)) {
-        errors.confirmPassword = 'Password must match';
-        return {
-            error: errors.confirmPassword,
-            isValid: isEmpty(errors)
-        };
-    }
-
-    return {
-        errors,
-        isValid: isEmpty(errors)
-    };
 
 
 
