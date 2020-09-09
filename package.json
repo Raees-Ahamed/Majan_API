@@ -2,13 +2,13 @@
   "name": "webapicw",
   "version": "1.0.0",
   "description": "web API CW",
-  "main": "server.js",
+  "main": "index.js",
   "scripts": {
     "client-install": "npm install --prefix ../Majan_Client",
     "client": "npm start --prefix ../Majan_Client",
     "dev": "concurrently \"npm run server\" \"npm run client\"",
-    "start": "node server.js",
-    "server": "nodemon server.js",
+    "start": "node index.js",
+    "server": "nodemon index.js",
     "test": "echo \"Error: no test specified\" && exit 1",
     "debug": "nodemon --inspect index.js"
   },
