@@ -12,11 +12,11 @@ router.get('/Selling/:catId', async (req, res) => {
             .sort({ modifiedAt: -1 })
             .then((data, err) => {
                 if (!err) res.status(200).send(data)
-                else return returnMessage.globalOne(false, 500, "No product found", res);
+                else return returnMessage.globalOne(false, 500, "No product found", res, err);
             })
 
     } catch (ex) {
-        return returnMessage.globalOne(false, 501, "server side error occurred! Please try again shortly..", res);
+        return returnMessage.globalOne(false, 501, "server side error occurred! Please try again shortly..", res, ex);
     }
 })
 
