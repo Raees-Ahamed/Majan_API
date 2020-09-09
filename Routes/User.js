@@ -2,14 +2,14 @@ var express = require('express');
 var router = express.Router();
 let password = require('../AppHelp/Password').password;
 let userValidations = require('../validation/User').userValidations;
-const mongoObjectId = require('mongoose').Types.ObjectId;
 const jwt = require("jsonwebtoken");
 
 const returnMessage = require('../validation/MessageHandelling').returnMessage;
 const User = require('../Models/User');
 
 
-const SECRET_KEY = "123456789";
+const SECRET_KEY = require('../config/keys').secretOrKey;
+
 
 router.get('/User/:email/:pwd', (req, res, next) => {
 
@@ -93,6 +93,9 @@ router.post('/User', async (request, res) => {
 
 
 })
+
+
+
 
 
 

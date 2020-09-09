@@ -7,7 +7,8 @@ const validationOrderInput = require("../validation/Order");
 const returnMessage = require('../validation/MessageHandelling').returnMessage;
 const jwt = require("jsonwebtoken");
 
-const SECRET_KEY = "123456789";
+const SECRET_KEY = require('../config/keys').secretOrKey;
+
 
 
 router.post('/Order', async (req, res) => {
@@ -19,13 +20,13 @@ router.post('/Order', async (req, res) => {
         const token = req.header("x-jwt-token");
 
         if ((!token) || (!jwt.verify(token, SECRET_KEY)))
-            return returnMessage.globalOne(false, 404, "Access denied.Invalid token", res);
+            return returnMessage.globalOne(false, 404, "Access denied.Invalid token", res, "");
 
         user = jwt.decode(token, SECRET_KEY);
 
         const { error, isValid } = validationOrderInput(req.body);
         if (isValid === false)
-            return returnMessage.globalOne(false, 404, error, res);
+            return returnMessage.globalOne(false, 404, error, res, "");
 
 
         req.body.forEach((orderItem) => {
@@ -34,7 +35,7 @@ router.post('/Order', async (req, res) => {
 
         let ProductUpdatedStatus = await updateProductQuantity(orderItems);
         if (ProductUpdatedStatus != "") {
-            return returnMessage.globalOne(false, 401, ProductUpdatedStatus, res);
+            return returnMessage.globalOne(false, 401, ProductUpdatedStatus, res, "");
         }
 
         Order.findOne({
@@ -47,7 +48,7 @@ router.post('/Order', async (req, res) => {
         });
 
     } catch (ex) {
-        return returnMessage.globalOne(false, 501, "server side error occurred! Please try again shortly..", res);
+        return returnMessage.globalOne(false, 501, "server side error occurred! Please try again shortly..", res, ex);
     }
 
 
@@ -87,13 +88,13 @@ createNewOder = async (userId, orderItems, res) => {
 
         order.save((err, data) => {
             if (err)
-                return returnMessage.globalOne(false, 404, "Order placing error.Please try again", res);
+                return returnMessage.globalOne(false, 404, "Order placing error.Please try again", res, err);
             else
-                return returnMessage.globalOne(true, 200, "order placed sussfully", res);
+                return returnMessage.globalOne(true, 200, "order placed sussfully", res, "");
         });
 
     } catch (ex) {
-        return returnMessage.globalOne(false, 501, "server side error occurred! Please try again shortly..", res);
+        return returnMessage.globalOne(false, 501, "server side error occurred! Please try again shortly..", res, ex);
     }
 
 
@@ -110,13 +111,13 @@ updateOder = async (userId, orderItems, res) => {
             { new: true },
             (err, data) => {
                 if (err)
-                    return returnMessage.globalOne(false, 404, "Order placing error.Please try again", res);
+                    return returnMessage.globalOne(false, 404, "Order placing error.Please try again", res, err);
                 else
-                    return returnMessage.globalOne(true, 200, "order placed sussfully", res);
+                    return returnMessage.globalOne(true, 200, "order placed sussfully", res, "");
             });
 
     } catch (ex) {
-        return returnMessage.globalOne(false, 501, "server side error occurred! Please try again shortly..", res);
+        return returnMessage.globalOne(false, 501, "server side error occurred! Please try again shortly..", res, ex);
     }
 
 
@@ -137,7 +138,7 @@ updateProductQuantity = async (orderItems) => {
             let customerSelectedItem = orderItems.filter(item => item.productId === product.id)[0];
             if (checkProductQuantityGettingMinius(product, customerSelectedItem) === true) {
 
-               await Product.findByIdAndUpdate(
+                await Product.findByIdAndUpdate(
                     { _id: product.id },
                     { $set: { availableQuantity: product.availableQuantity - customerSelectedItem.quantity, modifiedAt: Date.now() } },
                     { new: true, useFindAndModify: false },

@@ -1,4 +1,6 @@
 var returnMessage = exports.returnMessage = {};
+const Logger = require('../Logger/Logger').Logger;
+
 
 returnMessage.userSignInValidation = (isValid, Email, Password, Description) => {
     return {
@@ -47,17 +49,29 @@ returnMessage.user = (isValid, fName, lName, email, mobileNum, pwd, confirmPwd, 
         confirmPwd: confirmPwd,
         Description: Description,
         token: token,
-        user:user
+        user: user
     })
 }
 
 
 
-returnMessage.globalOne = (isValid, statusCode, Description, res) => {
+returnMessage.globalOne = (isValid, statusCode, Description, res, errorMsg) => {
+
+    if (statusCode != 200) {
+        let error;
+        if (errorMsg === "") error = Description;
+        else error = errorMsg;
+        Logger.error(error);
+    }
+
+
     return res.status(statusCode).send({
         isValid: isValid,
         Description: Description
     })
 }
+
+
+
 
 
