@@ -170,18 +170,7 @@ router.post("/User", async (request, res) => {
 
 router.post("/sendlink", (req, res) => {
   try {
-    const token = req.header("x-jwt-token");
-
-    if (!token || !jwt.verify(token, SECRET_KEY))
-      return returnMessage.globalOne(
-        false,
-        403,
-        "Access denied, Invalid token",
-        res
-      );
-
-    user = jwt.decode(token, SECRET_KEY);
-    User.findOne({ _id: user.id })
+    User.findOne({ email: req.body.email })
       .then((user) => res.send("User Found"))
       .then(() => {
         SendMail("sammanmra008@gmail.com");
@@ -208,7 +197,16 @@ router.post("/sendlink", (req, res) => {
 
 router.put('/forgotpassword', (req, res) => {
     try {
-
+      const userPassword = {
+        password: password.encrypt(request.body.password)
+      }
+      User.findOneAndUpdate({email: req.body.email}, { $set: userPassword }, { new: true, useFindAndModify: false })
+        .then((user) => res.send("Password Updated"))
+        .catch((err) =>
+          res.status(500).send({
+            isValid: false,
+            description: err,
+          }));
     }catch(e) {
         return returnMessage.user(
             false,
@@ -229,7 +227,7 @@ function SendMail(receiver) {
     port: 465,
     secure: true,
     auth: {
-      user: "xxx@gmail.com",
+      user: "xxx",
       pass: "xxx",
     },
   };
