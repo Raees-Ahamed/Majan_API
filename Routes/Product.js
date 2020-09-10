@@ -44,8 +44,6 @@ router.post("/Product", (req, res) => {
 
 });
 
-
-
 router.get("/Product", (req, res) => {
     Product.find()
         .sort({ date: -1 })
@@ -55,19 +53,13 @@ router.get("/Product", (req, res) => {
         });
 });
 
-
-
 router.get('/Product/:id', (req, res) => {
     Product.findById(req.params.id).then((product) => res.send(product)).catch((err) => {
         return returnMessage.globalOne(false, 501, "Product gettiing error.Please try agian.", res, err);
     });
 });
 
-
-
-
 router.put('/Product/:id', (req, res) => {
-
 
     try {
 
@@ -75,7 +67,6 @@ router.put('/Product/:id', (req, res) => {
 
         const { error, isValid } = validationProductInput(req.body);
         if (isValid === false) return returnMessage.globalOne(isValid, 400, error, res, "");
-
 
         const ProductUpdate = {
             categoryId: req.body.categoryId,
@@ -93,21 +84,15 @@ router.put('/Product/:id', (req, res) => {
             modifiedAt: Date.now()
         };
 
-
         Product.findByIdAndUpdate(req.params.id, { $set: ProductUpdate }, { new: true, useFindAndModify: false }, (err, data) => {
 
             if (err) return returnMessage.globalOne(false, 400, "Product updating error.Please try again", res, err);
             else return returnMessage.globalOne(true, 200, "Product " + data.name + " updated successfully", res, "");
-
         })
-
 
     } catch (ex) {
         return returnMessage.globalOne(false, 501, "server side error occurred! Please try again shortly..", res, ex);
     }
-
-
-
 
 })
 

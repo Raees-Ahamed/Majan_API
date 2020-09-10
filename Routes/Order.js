@@ -6,9 +6,12 @@ const Product = require("../Models/ProductModel");
 const validationOrderInput = require("../validation/Order");
 const returnMessage = require('../validation/MessageHandelling').returnMessage;
 const jwt = require("jsonwebtoken");
+const Logger = require('../Logger/Logger').Logger;
+
 
 const SECRET_KEY = require('../config/keys').secretOrKey;
 
+const nodemailer = require('nodemailer');
 
 
 router.post('/Order', async (req, res) => {
@@ -30,9 +33,18 @@ router.post('/Order', async (req, res) => {
                 validationCheck.contactNo, validationCheck.cardName, validationCheck.cardNo, validationCheck.expiryDate, validationCheck.cvNo, validationCheck.itemQty,
                 validationCheck.Description, 404, res, false);
 
+        let tempOderInfoInMag = "";
+        let totalAmount = 0;
+
         req.body.cartItems.forEach((orderItem) => {
             orderItems.push(createOrderItemObject(orderItem));
+            tempOderInfoInMag = tempOderInfoInMag + ' -  Item name  -  ' + orderItem.productName + '  Quantity -  ' + orderItem.quantity.toString() + '  Unit price  -  ' + orderItem.unitPrice.toString() + '  Line Total (LKR)  -  ' + orderItem.quantity * orderItem.unitPrice;
+            totalAmount = totalAmount + (orderItem.quantity * orderItem.unitPrice);
         });
+
+
+        const mailSendingStatus = await oderInvoiceGeneration(tempOderInfoInMag, totalAmount);
+        if(mailSendingStatus === 0)Logger.error(mailSendingStatus);
 
         let ProductUpdatedStatus = await updateProductQuantity(orderItems);
         if (ProductUpdatedStatus != "")
@@ -160,5 +172,83 @@ checkProductQuantityGettingMinius = (product, customerSelectedItem) => {
     if ((product.availableQuantity - customerSelectedItem.quantity) >= 0) return true;
     else return false;
 }
+
+
+
+
+
+
+oderInvoiceGeneration = async (tempOderInfoInMag, totalAmount) => {
+
+    const HtmlTemplate = `
+<html>
+<head>
+<style>
+table {
+  width: 100%;
+}
+table, th, td {
+  border: 1px solid lightgrey;
+  border-collapse: collapse;
+}
+th, td {
+  padding: 2px 4px;
+}
+</style>
+</head>
+
+<body>
+
+
+<p> Thank you ordering with us</p>
+<p> Invoice Date - ${ new Date().toISOString().replace(/T/, ' ').replace(/\..+/, '')}<p>
+<P> Your invoice details</P>
+
+<table>
+    <thead>
+        <tr>
+            <th>Oder Information</th>
+        </tr>
+    </thead>
+<tbody>
+        <tr>
+            <td>${tempOderInfoInMag}</td>
+        </tr>
+        <tr>
+            <td align="right">-Total Amount  -   ${totalAmount}</td>
+        <tr>
+</tbody>
+</table>
+</body>
+</html>
+    `;
+
+
+    var transporter = nodemailer.createTransport({
+        service: 'gmail',
+        secure: false,
+        auth: {
+            user: 'mulitha.development@gmail.com',
+            pass: 'Root@123'
+        }
+    });
+
+
+    var mailOptions = {
+        from: '"Majan.lk" <mulitha.development@gmail.com>',
+        to: 'jmulitha@gmail.com',
+        subject: 'testing',
+        html: HtmlTemplate,
+
+    };
+
+   const rmailrespond = await transporter.sendMail(mailOptions);
+   if(rmailrespond)return rmailrespond;
+   else return 0;
+   
+}
+
+
+
 
 module.exports = router;

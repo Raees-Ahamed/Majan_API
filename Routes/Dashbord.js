@@ -73,7 +73,6 @@ router.put('/Dashbord/:id', (req, res) => {
             else return returnMessage.globalOne(true, 200, data.name + " image updated successfully", res, "");
         })
 
-
     } catch (ex) {
         return returnMessage.globalOne(false, 501, "server side error occurred! Please try again shortly..", res, ex);
     }
