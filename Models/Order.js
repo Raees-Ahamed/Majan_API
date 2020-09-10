@@ -8,6 +8,7 @@ const orderSchema = new mongoose.Schema({
         items: [
             {
                 productId: { type: String, required: true },
+                productName: { type: String, required: true },
                 categoryId: { type: String, required: true },
                 discountPercent: { type: Number, required: true },
                 taxPercent: { type: Number, required: true },
