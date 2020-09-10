@@ -6,7 +6,6 @@ const returnMessage = require('../validation/MessageHandelling').returnMessage;
 const mongoObjectId = require('mongoose').Types.ObjectId;
 
 
-
 router.post('/Category', async (req, res) => {
 
     try {
@@ -51,7 +50,6 @@ router.post('/Category', async (req, res) => {
 
 })
 
-
 router.get('/Category', async (req, res) => {
 
     try {
@@ -77,20 +75,15 @@ router.get('/Category/:id', async (req, res) => {
     }
 })
 
-
 router.put('/Category/:id', (req, res) => {
 
-
     try {
-
         if (!mongoObjectId.isValid(req.params.id))
             return returnMessage.globalOne(false, 400, "There No record with this id", res, "");
 
         const { error, isValid } = validationCategoryInput(req.body);
-
         if (isValid === false)
             return returnMessage.globalOne(isValid, 400, error, res,"");
-
         const categoryUpdate = {
             categoryName: req.body.categoryName,
             description: req.body.description,
@@ -101,16 +94,11 @@ router.put('/Category/:id', (req, res) => {
 
             if (err) return returnMessage.globalOne(false, 400, "Category updating error", res, err);
             else return returnMessage.globalOne(false, 200, "Category " + data.categoryName + " updated successfully", res, "");
-
         })
-
 
     } catch (ex) {
         return returnMessage.globalOne(false, 501, "server side error occurred! Please try again shortly..", res, ex);
     }
-
-
-
 
 })
 
