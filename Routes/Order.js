@@ -7,6 +7,7 @@ const validationOrderInput = require("../validation/Order");
 const returnMessage = require('../validation/MessageHandelling').returnMessage;
 const jwt = require("jsonwebtoken");
 const Logger = require('../Logger/Logger').Logger;
+const User = require('../Models/User');
 
 
 const SECRET_KEY = require('../config/keys').secretOrKey;
@@ -23,7 +24,7 @@ router.post('/Order', async (req, res) => {
         const token = req.header("x-jwt-token");
 
         if ((!token) || (!jwt.verify(token, SECRET_KEY)))
-            return returnMessage.userOrder(false, true, true, true, true, true, true, true, true, true, true, "Access denied.Invalid token", 404, res, false);
+            return returnMessage.userOrder(false, true, true, true, true, true, true, true, true, true, true, "Access denied.Invalid token", 400, res, false);
 
         user = jwt.decode(token, SECRET_KEY);
 
@@ -31,7 +32,7 @@ router.post('/Order', async (req, res) => {
         if (validationCheck.isValid === false)
             return returnMessage.userOrder(validationCheck.isValid, validationCheck.firstName, validationCheck.lastName, validationCheck.address, validationCheck.city,
                 validationCheck.contactNo, validationCheck.cardName, validationCheck.cardNo, validationCheck.expiryDate, validationCheck.cvNo, validationCheck.itemQty,
-                validationCheck.Description, 404, res, false);
+                validationCheck.Description, 400, res, false);
 
         let tempOderInfoInMag = "";
         let totalAmount = 0;
@@ -42,13 +43,15 @@ router.post('/Order', async (req, res) => {
             totalAmount = totalAmount + (orderItem.quantity * orderItem.unitPrice);
         });
 
+        const userInfo = await User.findById(user.id);
 
-        const mailSendingStatus = await oderInvoiceGeneration(tempOderInfoInMag, totalAmount);
-        if(mailSendingStatus === 0)Logger.error(mailSendingStatus);
+
+        const mailSendingStatus = await oderInvoiceGeneration(tempOderInfoInMag, totalAmount, userInfo.email);
+        if (mailSendingStatus === 0) Logger.error(mailSendingStatus);
 
         let ProductUpdatedStatus = await updateProductQuantity(orderItems);
         if (ProductUpdatedStatus != "")
-            return returnMessage.userOrder(false, true, true, true, true, true, true, true, true, true, true, ProductUpdatedStatus, 401, res, true);
+            return returnMessage.userOrder(false, true, true, true, true, true, true, true, true, true, true, ProductUpdatedStatus, 400, res, true);
 
         Order.findOne({
             userId: user.id
@@ -125,7 +128,7 @@ updateOder = async (userId, orderItems, res) => {
             { new: true },
             (err, data) => {
                 if (err)
-                    return returnMessage.userOrder(false, true, true, true, true, true, true, true, true, true, true, "Order placing error.Please try again", 404, res, true);
+                    return returnMessage.userOrder(false, true, true, true, true, true, true, true, true, true, true, "Order placing error.Please try again", 400, res, true);
 
                 else
                     return returnMessage.userOrder(true, true, true, true, true, true, true, true, true, true, true, "Order placed sussfully", 200, res, true);
@@ -178,7 +181,7 @@ checkProductQuantityGettingMinius = (product, customerSelectedItem) => {
 
 
 
-oderInvoiceGeneration = async (tempOderInfoInMag, totalAmount) => {
+oderInvoiceGeneration = async (tempOderInfoInMag, totalAmount, email) => {
 
     const HtmlTemplate = `
 <html>
@@ -236,16 +239,16 @@ th, td {
 
     var mailOptions = {
         from: '"Majan.lk" <mulitha.development@gmail.com>',
-        to: 'jmulitha@gmail.com',
-        subject: 'testing',
+        to: email,
+        subject: 'INVOICE',
         html: HtmlTemplate,
 
     };
 
-   const rmailrespond = await transporter.sendMail(mailOptions);
-   if(rmailrespond)return rmailrespond;
-   else return 0;
-   
+    const rmailrespond = await transporter.sendMail(mailOptions);
+    if (rmailrespond) return rmailrespond;
+    else return 0;
+
 }
 
 
