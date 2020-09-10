@@ -20,23 +20,23 @@ router.post('/Order', async (req, res) => {
         const token = req.header("x-jwt-token");
 
         if ((!token) || (!jwt.verify(token, SECRET_KEY)))
-            return returnMessage.globalOne(false, 404, "Access denied.Invalid token", res, "");
+            return returnMessage.userOrder(false, true, true, true, true, true, true, true, true, true, true, "Access denied.Invalid token", 404, res, false);
 
         user = jwt.decode(token, SECRET_KEY);
 
-        const { error, isValid } = validationOrderInput(req.body);
-        if (isValid === false)
-            return returnMessage.globalOne(false, 404, error, res, "");
+        const validationCheck = validationOrderInput(req.body);
+        if (validationCheck.isValid === false)
+            return returnMessage.userOrder(validationCheck.isValid, validationCheck.firstName, validationCheck.lastName, validationCheck.address, validationCheck.city,
+                validationCheck.contactNo, validationCheck.cardName, validationCheck.cardNo, validationCheck.expiryDate, validationCheck.cvNo, validationCheck.itemQty,
+                validationCheck.Description, 404, res, false);
 
-
-        req.body.forEach((orderItem) => {
+        req.body.cartItems.forEach((orderItem) => {
             orderItems.push(createOrderItemObject(orderItem));
         });
 
         let ProductUpdatedStatus = await updateProductQuantity(orderItems);
-        if (ProductUpdatedStatus != "") {
-            return returnMessage.globalOne(false, 401, ProductUpdatedStatus, res, "");
-        }
+        if (ProductUpdatedStatus != "")
+            return returnMessage.userOrder(false, true, true, true, true, true, true, true, true, true, true, ProductUpdatedStatus, 401, res, true);
 
         Order.findOne({
             userId: user.id
@@ -88,9 +88,11 @@ createNewOder = async (userId, orderItems, res) => {
 
         order.save((err, data) => {
             if (err)
-                return returnMessage.globalOne(false, 404, "Order placing error.Please try again", res, err);
+                return returnMessage.userOrder(false, true, true, true, true, true, true, true, true, true, true, "Order placing error.Please try again", 404, res, true);
+
             else
-                return returnMessage.globalOne(true, 200, "order placed sussfully", res, "");
+                return returnMessage.userOrder(true, true, true, true, true, true, true, true, true, true, true, "Order placed sussfully", 200, res, true);
+
         });
 
     } catch (ex) {
@@ -111,9 +113,11 @@ updateOder = async (userId, orderItems, res) => {
             { new: true },
             (err, data) => {
                 if (err)
-                    return returnMessage.globalOne(false, 404, "Order placing error.Please try again", res, err);
+                    return returnMessage.userOrder(false, true, true, true, true, true, true, true, true, true, true, "Order placing error.Please try again", 404, res, true);
+
                 else
-                    return returnMessage.globalOne(true, 200, "order placed sussfully", res, "");
+                    return returnMessage.userOrder(true, true, true, true, true, true, true, true, true, true, true, "Order placed sussfully", 200, res, true);
+
             });
 
     } catch (ex) {
