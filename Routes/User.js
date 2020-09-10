@@ -44,54 +44,43 @@ router.get('/User/:email/:pwd', (req, res, next) => {
 
 
 router.post('/User', async (request, res) => {
-
     try {
-
         const validationCheck = userValidations.validateSignUp(request.body);
         if (validationCheck.isValid === false)
-            return returnMessage.user(validationCheck.isValid, validationCheck.fName, validationCheck.lName, validationCheck.email, validationCheck.mobileNum, validationCheck.pwd, validationCheck.confirmPwd, validationCheck.Description, "", 400, res, "");
-
-
+            return returnMessage.user(validationCheck.isValid, validationCheck.fName, validationCheck.lName, validationCheck.email, validationCheck.mobileNum,
+                validationCheck.pwd, validationCheck.confirmPwd, validationCheck.Description, "", 400, res, "");
         User.findOne({
             email: request.body.email
         }).then(user => {
-
             if (user)
-                return returnMessage.user(false, validationCheck.fName, validationCheck.lName, validationCheck.email, validationCheck.mobileNum, validationCheck.pwd, validationCheck.confirmPwd, "User already present", "", 400, res, "");
-
+                return returnMessage.user(false, validationCheck.fName, validationCheck.lName, validationCheck.email, validationCheck.mobileNum,
+                    validationCheck.pwd, validationCheck.confirmPwd, "User already present", "", 400, res, "");
             else {
-
                 let user = new User({
-
                     firstName: request.body.firstName,
                     lastName: request.body.lastName,
                     email: request.body.email,
                     mobileNumber: request.body.mobileNum,
                     password: password.encrypt(request.body.password),
                     usertype: request.body.usertype
-
                 });
-
 
                 user.save((err, data) => {
                     if (err)
-                        return returnMessage.user(false, validationCheck.fName, validationCheck.lName, validationCheck.email, validationCheck.mobileNum, validationCheck.pwd, validationCheck.confirmPwd, "User registring error.Please try agin", "", 400, res, "");
+                        return returnMessage.user(false, validationCheck.fName, validationCheck.lName, validationCheck.email, validationCheck.mobileNum,
+                            validationCheck.pwd, validationCheck.confirmPwd, "User registring error.Please try agin", "", 400, res, "");
 
                     let token = jwt.sign({ id: data._id, email: data.email }, SECRET_KEY);
-                    return returnMessage.user(true, validationCheck.fName, validationCheck.lName, validationCheck.email, validationCheck.mobileNum, validationCheck.pwd, validationCheck.confirmPwd, "User registered Successfuly", token, 200, res, data.firstName);
-
+                    return returnMessage.user(true, validationCheck.fName, validationCheck.lName, validationCheck.email, validationCheck.mobileNum,
+                        validationCheck.pwd, validationCheck.confirmPwd, "User registered Successfuly", token, 200, res, data.firstName);
                 })
             }
-
         })
 
-
-
     } catch (ex) {
-        return returnMessage.user(false, false, false, false, false, false, false, "server side error occurred! Please try again shortly..", "", 501, res, "");
+        return returnMessage.user(false, false, false, false, false, false, false,
+            "server side error occurred! Please try again shortly..", "", 501, res, "");
     }
-
-
 })
 
 
