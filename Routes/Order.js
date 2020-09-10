@@ -106,6 +106,7 @@ createOrderItemObject = (orderItems) => {
 
   return {
       productId: orderItems.productId,
+      productName: orderItems.productName,
       categoryId: orderItems.categoryId,
       discountPercent: orderItems.discountPercent,
       taxPercent: orderItems.taxPercent,
@@ -275,3 +276,7 @@ padding: 2px 4px;
   else return 0;
 
 }
+
+
+
+module.exports = router;
