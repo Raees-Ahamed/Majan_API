@@ -38,7 +38,7 @@ try {
 
     mongoose
         .connect(db, { useNewUrlParser: true, useUnifiedTopology: true })
-        .then(() => { Logger.info("DB Connected") })
+        .then(() => { Logger.info("DB Connected"); console.log("DB Connected") })
         .catch(err => Logger.error("DB Connecting error " + err));
 
 

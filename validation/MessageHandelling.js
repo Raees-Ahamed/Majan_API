@@ -25,6 +25,41 @@ returnMessage.userSignUpValidation = (isValid, fName, lName, email, mobileNum, p
     }
 }
 
+returnMessage.userOrderValidation = (isValid, firstName, lastName, address, city, contactNo, cardName, cardNo, expiryDate, cvNo, itemQty, Description) => {
+    return {
+        isValid: isValid,
+        firstName: firstName,
+        lastName: lastName,
+        address: address,
+        city: city,
+        contactNo: contactNo,
+        cardName: cardName,
+        cardNo: cardNo,
+        expiryDate: expiryDate,
+        cvNo: cvNo,
+        itemQty: itemQty,
+        Description: Description
+    }
+}
+
+returnMessage.userOrder = (isValid, firstName, lastName, address, city, contactNo, cardName, cardNo, expiryDate, cvNo, itemQty, Description, statusCode, res, token) => {
+    return res.status(statusCode).send({
+        isValid: isValid,
+        firstName: firstName,
+        lastName: lastName,
+        address: address,
+        city: city,
+        contactNo: contactNo,
+        cardName: cardName,
+        cardNo: cardNo,
+        expiryDate: expiryDate,
+        cvNo: cvNo,
+        itemQty: itemQty,
+        Description: Description,
+        token:token
+    })
+}
+
 
 
 
