@@ -2,13 +2,13 @@
   "name": "webapicw",
   "version": "1.0.0",
   "description": "web API CW",
-  "main": "server.js",
+  "main": "index.js",
   "scripts": {
     "client-install": "npm install --prefix ../Majan_Client",
     "client": "npm start --prefix ../Majan_Client",
     "dev": "concurrently \"npm run server\" \"npm run client\"",
-    "start": "node server.js",
-    "server": "nodemon server.js",
+    "start": "node index.js",
+    "server": "nodemon index.js",
     "test": "echo \"Error: no test specified\" && exit 1",
     "debug": "nodemon --inspect index.js"
   },
@@ -24,6 +24,7 @@
     "gravatar": "^1.8.1",
     "jsonwebtoken": "^8.5.1",
     "mongoose": "^5.10.2",
+    "nodemailer": "^6.4.11",
     "nodemon": "^2.0.4",
     "path": "^0.12.7",
     "validator": "^13.1.1"
