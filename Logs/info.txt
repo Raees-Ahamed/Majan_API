@@ -106,3 +106,7 @@ Thu Sep 10 2020 01:28:01 GMT+0530 (India Standard Time) : DB Connected
 Thu Sep 10 2020 01:28:52 GMT+0530 (India Standard Time) : DB Connected
 Thu Sep 10 2020 01:29:03 GMT+0530 (India Standard Time) : API hosted successfully for port 3001
 Thu Sep 10 2020 01:29:06 GMT+0530 (India Standard Time) : DB Connected
+Thu Sep 10 2020 20:10:19 GMT+0530 (India Standard Time) : API hosted successfully for port 3001
+Thu Sep 10 2020 20:11:26 GMT+0530 (India Standard Time) : API hosted successfully for port 3001
+Thu Sep 10 2020 20:12:58 GMT+0530 (India Standard Time) : API hosted successfully for port 3001
+Thu Sep 10 2020 20:13:01 GMT+0530 (India Standard Time) : DB Connected

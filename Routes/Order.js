@@ -131,6 +131,12 @@ createNewOder = async (userId, orderItems, res) => {
   }
 };
 
+        
+
+
+
+
+
 updateOder = async (userId, orderItems, res) => {
   try {
     Order.updateOne(
@@ -166,6 +172,7 @@ updateOder = async (userId, orderItems, res) => {
     );
   }
 };
+
 
 updateProductQuantity = async (orderItems) => {
   debugger;
